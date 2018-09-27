@@ -101,4 +101,141 @@ export default class DoublyLinkedList {
 
         return deletedNode;
     }
+
+    /**
+     * @param {Object} findParams
+     * @param {*} findParams.value
+     * @param {function} [findParams.callback]
+     * @return {DoublyLinkedListNode}
+     */
+
+    find({ value = undefined, callback = undefined }) {
+        if (!this.head) {
+            return null;
+        }
+
+        let currentNode = this.head;
+
+        while (currentNode) {
+            // If callback is specified then try to find node by callback.
+            if (callback && callback(currentNode.value)) {
+                return currentNode;
+            }
+
+            // If value is specified then try to compare by value.
+            if (value !== undefined && this.compare.equal(currentNode.value, value)) {
+                return currentNode;
+            }
+
+            currentNode = currentNode.next;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return {DoublyLinkedListNode}
+     */
+    deleteTail() {
+        if (!this.tail) {
+            return null;
+        }
+
+        if (this.head === this.tail) {
+            // If There is only one node in linked list.
+            const deletedTail = this.tail;
+            this.head = null;
+            this.tail = null;
+
+            return deletedTail;
+        }
+
+        // If there are many nodes in linked list.
+        const deletedTail= this.tail;
+
+        this.tail = this.tail.previous;
+        this.tail.next = null;
+
+        return deletedTail;
+    }
+
+    /**
+     * @return {DoublyLinkedListNode}
+     */
+    deleteHead() {
+        if (!this.head) {
+            return null;
+        }
+
+        const deletedHead = this.head;
+        if (this.head.next) {
+            // If There are many nodes in linked list.
+            this.head = this.head.next;
+            this.head.previous = null;
+        } else {
+            // If There is only one node in linked list.
+            this.head = null;
+            this.tail = null;
+        }
+
+        return deletedHead;
+    }
+
+    /**
+     * @return {DoublyLinkedListNode[]}
+     */
+    toArray() {
+        const nodes = [];
+        
+        let currentNode = this.head;
+        while (currentNode) {
+            nodes.push(currentNode);
+            currentNode = currentNode.next;
+        }
+
+        return nodes;
+    }
+
+    /**
+     * @param {*[]} values - Array of values that need to be converted to linked list.
+     * @return {DoublyLinkedList}
+     */
+    fromArray(values) {
+        values.forEach(value => this.append(value));
+
+        return this;
+    }
+
+    /**
+     * @param {function} [callback]
+     * @return {string}
+     */
+    toString(callback) {
+        return this.toArray.map(node => node.toString(callback).toString());
+    }
+
+    /**
+     * Reverse a linked list.
+     * @returns {DoublyLinkedList}
+     */
+    reverse() {
+        let currNode = this.head;
+        let prevNode = null;
+        let nextNode = null;
+
+        while (currNode) {
+            prevNode = currNode.previous;
+            nextNode = currNode.next;
+            currNode.previous = nextNode;
+            currNode.next = prevNode
+
+            currNode = nextNode;
+        }
+
+        prevNode = this.tail;
+        this.tail = this.head;
+        this.head = prevNode;
+
+        return this;
+    }
 }
