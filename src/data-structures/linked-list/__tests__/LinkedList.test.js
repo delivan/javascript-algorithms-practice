@@ -1,4 +1,4 @@
-import LinkedList from '../src/linked-list/LinkedList';
+import LinkedList from '../LinkedList';
 
 describe('LinkedList', () => {
     it('should create empty linked list', () => {
@@ -95,7 +95,7 @@ describe('LinkedList', () => {
         expect(linkedList.find({ value: 2, customValue: 'test5' })).toBeNull();
     });
 
-    it('should delete node by value from linked list', () => {s
+    it('should delete node by value from linked list', () => {
         const linkedList = new LinkedList();
 
         expect(linkedList.delete(5)).toBeNull();

@@ -1,4 +1,4 @@
-import LinkedListNode from '../src/linked-list/LinkedListNode';
+import LinkedListNode from '../LinkedListNode';
 
 describe('LinkedListNode', () => {
     it('should create list node with value', () => {

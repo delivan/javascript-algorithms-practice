@@ -151,7 +151,7 @@ export default class DoublyLinkedList {
         }
 
         // If there are many nodes in linked list.
-        const deletedTail= this.tail;
+        const deletedTail = this.tail;
 
         this.tail = this.tail.previous;
         this.tail.next = null;
@@ -211,7 +211,7 @@ export default class DoublyLinkedList {
      * @return {string}
      */
     toString(callback) {
-        return this.toArray.map(node => node.toString(callback).toString());
+        return this.toArray().map(node => node.toString(callback)).toString();
     }
 
     /**
