@@ -28,7 +28,7 @@ export default class Stack {
      */
     pop() {
         if (this.isEmpty()) {
-            return null
+            return null;
         }
 
         return this.linkedList.deleteHead().value;
@@ -53,6 +53,6 @@ export default class Stack {
      * @return {*[]}
      */
     toArray() {
-        return this.linkedList.toArray().map(linkedListNode => linkedListNode.value)
+        return this.linkedList.toArray().map(linkedListNode => linkedListNode.value);
     }
 }
