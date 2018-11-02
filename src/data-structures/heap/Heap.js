@@ -134,6 +134,17 @@ export default class Heap {
 
     /**
      * @param {*} item 
+     * @return {Heap}
+     */
+    add(item) {
+        this.heapContainer.push(item);
+        this.heapifyUp();
+
+        return this;
+    }
+
+    /**
+     * @param {*} item 
      * @param {Comparator} comparator 
      * @return {Number[]}
      */
@@ -192,6 +203,13 @@ export default class Heap {
         }
         
         return this;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isEmpty() {
+        return this.heapContainer.length === 0
     }
 
     /**
