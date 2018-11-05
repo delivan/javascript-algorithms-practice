@@ -156,9 +156,8 @@ export default class Heap {
             if (comparator.equal(item, this.heapContainer[itemIndex])) {
                 foundItemIndices.push(itemIndex);
             }
-
-            return foundItemIndices;
         }
+        return foundItemIndices;
     }
 
     /**
