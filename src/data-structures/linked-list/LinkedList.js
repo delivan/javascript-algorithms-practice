@@ -20,19 +20,14 @@ export default class LinkedList {
      * @return {LinkedList}
      */
     prepend(value) {
-        const newNode = new LinkedListNode(value);
-
-        // If there is no head yet let's make new node a head.
-        if (!this.head) {
-            this.head = newNode;
-            this.tail = newNode;
-        
-            return this;
-        }
-
-        // Attach new node to the head of linked list.
-        newNode.next = this.head;
+        // 새로운 노드를 head로 만든다.
+        const newNode = new LinkedListNode(value, this.head);
         this.head = newNode;
+
+        // 만약 tail이 없다면 새로운 노드를 또한 tail로 만든다.
+        if (!this.tail) {
+            this.tail = newNode;
+        }
 
         return this;
     }
@@ -44,15 +39,15 @@ export default class LinkedList {
     append(value) {
         const newNode = new LinkedListNode(value);
 
-        // If there is no head yet let's make new node a head.
+        // 만약 head가 없다면 새로운 노드를 또한 head로 만든다.
         if (!this.head) {
             this.head = newNode;
             this.tail = newNode;
 
             return this;
         }
-        
-        // Attach new node to the end of linked list.
+
+        // 새로운 노드를 tail로 만든다.
         this.tail.next = newNode;
         this.tail = newNode;
 
@@ -70,8 +65,7 @@ export default class LinkedList {
 
         let deletedNode = null;
 
-        // If the head must be deleted then make next node that is differ
-        // from the head to be a new head.
+        // 만약 head가 삭제되어야 한다면 그 다음노드를 head로 만든다.
         while (this.head && this.compare.equal(this.head.value, value)) {
             deletedNode = this.head;
             this.head = this.head.next;
@@ -80,7 +74,7 @@ export default class LinkedList {
         let currentNode = this.head;
 
         if (currentNode !== null) {
-            // If next node must be deleted then make next node to be a next next one.
+            // 만약 다음노드가 삭제되어야 한다면 다음다음노드를 다음노드로 만든다.
             while (currentNode.next) {
                 if (this.compare.equal(currentNode.next.value, value)) {
                     deletedNode = currentNode.next;
@@ -92,6 +86,7 @@ export default class LinkedList {
             }
         }
 
+        // tail노드가 삭제되어야 하는지 확인한다.
         if (this.compare.equal(this.tail.value, value)) {
             this.tail = currentNode;
         }
@@ -113,12 +108,12 @@ export default class LinkedList {
         let currentNode = this.head;
 
         while (currentNode) {
-            // If callback is specified then try to find node by callback.
+            // 만약 callback이 정의되어 있다면 callback으로 node를 찾는다. 
             if (callback && callback(currentNode.value)) {
                 return currentNode;
             }
 
-            // If value is specified then try to compare by value.
+            // 만약 value가 정의되어 있다면 value로 node를 찾는다.
             if (value && this.compare.equal(currentNode.value, value)) {
                 return currentNode;
             }
@@ -136,15 +131,14 @@ export default class LinkedList {
         const deletedTail = this.tail;
         
         if (this.head === this.tail) {
-            // There is only one node in linked list.
+            // linked list에 오직 한 노드만 있을 때
             this.head = null;
             this.tail = null;
 
             return deletedTail;
         }
 
-        // If there are many nodes in linked list
-        // rewind to the last node and delete next link for the node before the last one.
+        // 삭제할 노드 바로 전 노드의 next를 null로 할당한다.
         let currentNode = this.head;
         while (currentNode.next) {
             if (!currentNode.next.next) {
@@ -180,7 +174,7 @@ export default class LinkedList {
     }
 
     /**
-     * @param {*[]} values - Array of vaules that need to be converted to linked list.
+     * @param {*[]} values
      * @return {LinkedList}
      */
     fromArray(values) {
@@ -213,7 +207,6 @@ export default class LinkedList {
     }
 
     /**
-     * Reverse a linked list.
      * @returns {LinkedList}
      */
     reverse() {
@@ -222,18 +215,18 @@ export default class LinkedList {
         let nextNode = null;
 
         while (currNode) {
-            // Store next node.
+            // 다음노드를 저장하고
             nextNode = currNode.next;
 
-            // Change next node of the current node so it would link to previous node.
+            // 현재노드의 다음노드를 이전노드로 변경하고
             currNode.next = prevNode;
             
-            // Move prevNode and currNode nodes one step forward.
+            // 한 노드씩 이동한다.
             prevNode = currNode;
             currNode = nextNode;
         }
 
-        // Reset head and tail.
+        // head와 tail을 리셋한다.
         this.tail = this.head;
         this.head = prevNode;
 
